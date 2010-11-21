@@ -1,0 +1,8 @@
+A tester for Hacon's Hafas system used by NMBS/SNCB, written in Python.
+
+- by fs111 (https://github.com/fs111)
+- iRail (http://irail.be) project
+	* source: 	http://github.com/iRail/iRail-hafas-tester
+	* mailing: 	http://list.irail.be
+	* trac:		http://project.irail.be
+	* API:		http://api.irail.be
