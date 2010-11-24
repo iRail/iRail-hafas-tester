@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 import httplib
-import urllib
 from xml.dom import minidom
 import sys
 import time
 
-FIRST = """<?xml version="1.0" encoding="iso-8859-1"?>
+STATION_XML = """<?xml version="1.0" encoding="iso-8859-1"?>
 <ReqC ver="1.1" prod="iRail" lang="EN">
 <LocValReq id="FROM" maxNr="1">
 <ReqLoc match="%s" type="ST"/>
@@ -16,7 +15,7 @@ FIRST = """<?xml version="1.0" encoding="iso-8859-1"?>
 </LocValReq>
 </ReqC>"""
 
-SECOND = """<?xml version="1.0" encoding="iso-8859-1"?>
+SCHEDULE_XML = """<?xml version="1.0" encoding="iso-8859-1"?>
 <ReqC ver="1.1" prod="iRail" lang="EN">
 <ConReq>
 <Start min="10">
@@ -83,15 +82,15 @@ def main():
         sys.exit(1)
     from_station_name = sys.argv[1]
     to_station_name = sys.argv[2]
-    body = FIRST % (from_station_name, to_station_name)
-    data = make_request(body)
+    xmlquery = STATION_XML % (from_station_name, to_station_name)
+    data = make_request(xmlquery)
 
     doc = minidom.parseString(data)
     print doc.toxml()
 
     from_station_id, to_station_id = find_stations(doc)
     tstamp, day = now()
-    body = SECOND % (from_station_id, to_station_id, tstamp, day)
+    body = SCHEDULE_XML % (from_station_id, to_station_id, tstamp, day)
 
     data = make_request(body)
     print data
